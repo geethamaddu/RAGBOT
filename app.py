@@ -25,6 +25,6 @@ if uploaded_file is not None:
     st.info("Document Processes Successfully")
     user_question=st.text_area("Ask your question about the document")
     if st.button("Answer"):
-        answer=answer_question(user_question)
-        st.markdown("llama response")
-        st.markdown(answer)
+            answer=answer_question(user_question)
+            st.markdown("llama response")
+            st.markdown(answer)
