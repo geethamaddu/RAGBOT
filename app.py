@@ -6,8 +6,15 @@ from rag_utility import process_document_ingestion,answer_question
 
 working_dir=os.getcwd()
 
-st.title("llama model Document RAG")
+st.set_page_config(
+    page_icon="📑",
+    page_title="RAGBOT",
+    layout="centered"
+    
+)
 
+st.title("RAG-BOT🤖")
+st.subheader("llama model document RAG")
 uploaded_file=st.file_uploader("Upload a PDF file",type=["pdf"])
 
 if uploaded_file is not None:
