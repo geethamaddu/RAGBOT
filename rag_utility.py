@@ -25,9 +25,21 @@ llm=ChatGroq(
 )
 print("llm model loaded")
 
-def process_document_ingestion(file_name):
-    loader=PyMuPDFLoader(f"{working_dir}/{file_name}")
-    documents=loader.load()
+def process_document_ingestion(file_names):
+    if isinstance(file_names, str):
+        file_names = [file_names]
+    all_docs = []
+
+    for file in file_names:
+        loader = PyMuPDFLoader(os.path.join(working_dir, file))
+        documents = loader.load()
+
+        # Add source metadata
+        for doc in documents:
+            doc.metadata["source"] = file
+
+        all_docs.extend(documents)
+    
     text_splitter=RecursiveCharacterTextSplitter(
         chunk_size=2000,
         chunk_overlap=500
@@ -50,11 +62,15 @@ def answer_question(user_question):
     qa_chain=RetrievalQA.from_chain_type(
         llm=llm,
         chain_type="stuff",
-        retriever=retriever
+        retriever=retriever,
+         return_source_documents=True
     )
     response=qa_chain.invoke({"query":user_question})
     answer=response["result"]
+    sources = set()
 
-    return answer
+    for doc in response["source_documents"]:
+        sources.add(doc.metadata["source"])
+    return answer,list(sources)
 
 print("answer_question successful")
