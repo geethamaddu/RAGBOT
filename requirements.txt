@@ -1,0 +1,15 @@
+langchain-classic
+langchain
+langchain-community
+langchain-groq
+chromadb
+langchain-text-splitters
+langchain-chroma
+python-dotenv
+sentence-transformers
+unstructured
+unstructured[pdf]
+nltk
+langchain-huggingface
+pytesseract
+pymupdf
